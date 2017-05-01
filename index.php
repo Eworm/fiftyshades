@@ -21,6 +21,10 @@
             line-height: 1.8;
             outline: 0;
         }
+        
+        a {
+            color: #ce5169;
+        }
 
         body {
             padding: 100px 0;
@@ -44,7 +48,7 @@
         }
 
         .color-input:focus {
-            border-color: #000;
+            border-color: #f6d282;
         }
         
         .color-output-container {
@@ -111,6 +115,10 @@
 
         footer a {
             text-decoration: none;
+        }
+        
+        footer a:hover, footer a:focus {
+            text-decoration: underline;
         }
 
         .error {
