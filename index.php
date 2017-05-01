@@ -62,6 +62,10 @@
             max-height: none;
             opacity: 1;
         }
+        
+        .dark .color-output {
+            color: white;
+        }
 
         .color-output {
             margin: 16px auto;
@@ -74,6 +78,7 @@
             background: #<?php echo $hex ? $hex : 'ddd' ?>;
             cursor: pointer;
             font-size: 1.25rem;
+            transition: all .25s ease;
         }
 
         .color-output-color {
@@ -166,6 +171,7 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="ntc.js"></script>
+<script src="color-conversion-algorithms.js"></script>
 <script src="clipboard.js-master/dist/clipboard.min.js"></script>
 
 <span class="compare" id="compare"></span>
@@ -203,6 +209,16 @@
 
                 console.log('A grey');
                 
+                var luminosity = rgbToHsl(parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16));                
+                if (luminosity[2] < 0.5)
+                {
+                    $('.color-output-container').addClass('dark');
+                }
+                else
+                {
+                    $('.color-output-container').removeClass('dark');
+                }
+                
                 var greyPercentage = Math.floor(100- (100/255) * resultColor[0]);
                 $('.color-output-container').addClass('found');
                 $('.color-output-color').html('$color--' + greyPercentage + ': #' + hex + ';');
@@ -213,7 +229,7 @@
             {
 
                 console.log('A color');
-
+                
                 var n_match  = ntc.name('#' + hex);
                 var name = n_match[1];
 
