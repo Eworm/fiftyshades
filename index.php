@@ -21,7 +21,7 @@
             line-height: 1.8;
             outline: 0;
         }
-        
+
         a {
             color: #ce5169;
         }
@@ -50,19 +50,19 @@
         .color-input:focus {
             border-color: #f6d282;
         }
-        
+
         .color-output-container {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
             transition: all .15s ease-in;
         }
-        
+
         .found {
             max-height: none;
             opacity: 1;
         }
-        
+
         .dark .color-output {
             color: white;
         }
@@ -121,7 +121,7 @@
         footer a {
             text-decoration: none;
         }
-        
+
         footer a:hover, footer a:focus {
             text-decoration: underline;
         }
@@ -145,18 +145,18 @@
 <form method="POST" id="js-hexform">
 
     <input class="color-input" type="search" class="input" name="input" placeholder="Add a hex color" autofocus maxlength="7" autocomplete="off">
-    
+
     <div class="color-output-container">
-    
+
         <button class="color-output" type="button" id="code" data-clipboard-text="">
             <span class="color-output-color"></span>
             <span class="color-output-copied">Copied!</span>
         </button>
-        
+
         <small class="exp">
             Click variable to copy to clipboard
         </small>
-    
+
     </div>
 
     <span class="error"></span>
@@ -203,13 +203,13 @@
                 parseInt(result[2], 16),
                 parseInt(result[3], 16)
             );
+            var luminosity = rgbToHsl(parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16));
 
             if (!!resultColor.reduce(function(a, b){ return (a === b) ? a : NaN; }) === true)
             {
 
                 console.log('A grey');
-                
-                var luminosity = rgbToHsl(parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16));                
+
                 if (luminosity[2] < 0.5)
                 {
                     $('.color-output-container').addClass('dark');
@@ -218,7 +218,7 @@
                 {
                     $('.color-output-container').removeClass('dark');
                 }
-                
+
                 var greyPercentage = Math.floor(100- (100/255) * resultColor[0]);
                 $('.color-output-container').addClass('found');
                 $('.color-output-color').html('$color--' + greyPercentage + ': #' + hex + ';');
@@ -229,9 +229,20 @@
             {
 
                 console.log('A color');
-                
+
                 var n_match  = ntc.name('#' + hex);
                 var name = n_match[1];
+                
+                console.log(hex);
+                console.log(luminosity);
+                if (luminosity[2] <= 0.5)
+                {
+                    $('.color-output-container').addClass('dark');
+                }
+                else
+                {
+                    $('.color-output-container').removeClass('dark');
+                }
 
                 name = name.replace(" / ", "-");
                 name = name.replace(" ", "-");
