@@ -131,6 +131,12 @@ if( $_GET['q'] )
         .copied .color-output-copied {
             opacity: 1;
         }
+        
+        .exp {
+            display: block;
+            color: #aaa;
+            font-weight: 300;
+        }
 
         footer {
             margin-top: 48px;
@@ -173,11 +179,15 @@ if( $_GET['q'] )
 
     </form>
 
-
     <?php echo $input; ?>
+    
+    <small class="exp">
+        Click to copy
+    </small>
 
-
-<footer>Thanks <a href="http://chir.ag/projects/ntc">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades">Functioneel Wit</a>!</footer>
+    <footer>
+        Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>
+    </footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="ntc.js"></script>
@@ -224,6 +234,11 @@ if( $_GET['q'] )
             {
                 me.removeClass('copied');
             }, 1250);
+        })
+        
+        $('.color-input').on('click', function()
+        {
+            $(this).select();    
         })
         
         $('.color-input').select();
