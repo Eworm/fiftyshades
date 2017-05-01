@@ -170,6 +170,7 @@
         $('#js-hexform').on('submit', function(e)
         {
             e.preventDefault();
+            hexToRgb($('.color-input').val());
             $('.color-input').focus();
         })
 
