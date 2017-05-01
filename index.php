@@ -182,7 +182,7 @@ if( $_GET['q'] )
     <?php echo $input; ?>
     
     <small class="exp">
-        Click to copy
+        Click the variable to copy
     </small>
 
     <footer>
