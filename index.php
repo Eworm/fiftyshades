@@ -93,10 +93,10 @@ if( $_GET['q'] )
         .color-input {
             margin: 0 auto;
             padding: 8px 16px;
-            display: block;
+            display: inline-block;
             border: 1px solid #ccc;
             border-radius: 36px;
-            font-size: 24px;
+            font-size: 2rem;
             background: white;
             transition: all .25s ease;
         }
@@ -115,6 +115,7 @@ if( $_GET['q'] )
             font-size: 24px;
             background: #<?php echo $hex ? $hex : 'ddd' ?>;
             cursor: pointer;
+            font-size: 1.25rem;
         }
 
         .color-output-color {
@@ -156,6 +157,12 @@ if( $_GET['q'] )
         footer a {
             text-decoration: none;
         }
+        
+        .error {
+            margin-bottom: 40px;
+            display: block;
+            color: red;
+        }
 
     </style>
 
@@ -190,7 +197,7 @@ if( $_GET['q'] )
     <?php echo $input; ?>
     
     <small class="exp">
-        Click the variable to copy
+        Click variable to copy to clipboard
     </small>
 
     <footer>
