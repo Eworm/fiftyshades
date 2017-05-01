@@ -41,7 +41,7 @@
             padding: 8px 16px;
             display: inline-block;
             border: 1px solid #ccc;
-            border-radius: 36px;
+            border-radius: 2px;
             font-size: 1.5rem;
             background: white;
             transition: all .25s ease;
@@ -140,23 +140,23 @@
 <form method="POST" id="js-hexform">
 
     <input class="color-input" type="search" class="input" name="input" placeholder="Add a hex color" autofocus maxlength="7" autocomplete="off">
+    
+    <div class="color-output-container">
+    
+        <button class="color-output" type="button" id="code" data-clipboard-text="">
+            <span class="color-output-color"></span>
+            <span class="color-output-copied">Copied!</span>
+        </button>
+        
+        <small class="exp">
+            Click variable to copy to clipboard
+        </small>
+    
+    </div>
 
     <span class="error"></span>
 
 </form>
-
-<div class="color-output-container">
-
-    <button class="color-output" type="button" id="code" data-clipboard-text="">
-        <span class="color-output-color"></span>
-        <span class="color-output-copied">Copied!</span>
-    </button>
-    
-    <small class="exp">
-        Click variable to copy to clipboard
-    </small>
-
-</div>
 
 <footer>
     Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>
