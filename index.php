@@ -50,97 +50,100 @@ if( $_GET['q'] )
 
     }
 
-    $input = '<input id="code" value="' . @$class . '">';
+    $input = '<button class="color-output" type="button" id="code" data-clipboard-text="' . @$class . '"><span class="color-output-color">' . @$class . '</span><span class="color-output-copied">Copied!</span></button>';
 
 }
 
 ?>
 
-<html>
+<html lang="en">
 <head>
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
+
     <style>
 
-        html
-        {
+        *  {
+            margin: 0;
+            padding: 0;
+            font-family: 'Fira Sans';
             text-align: center;
-            background-color: #<?php echo $hex ? $hex : 'ddd' ?>;
-            font-family: sans-serif;
+            line-height: 1;
+            outline: 0;
         }
 
-        form
-        {
-            padding: 30px;
+        body {
+            padding: 100px 0;
         }
 
-        input.input
-        {
-            width: 120px;
-            text-align: center;
+        h1 {
+            margin: 0 0 40px;
+            font-size: 24px;
+            font-weight: 400;
         }
 
-        input.input,
-        input.submit
-        {
-            font-size: 20px;
-            border-radius: 4px;
-            border: none;
-            padding: 5px 15px;
+        .color-input {
+            margin: 0 auto;
+            padding: 8px 16px;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 36px;
+            font-size: 24px;
+            background: white;
+            transition: all .25s ease;
         }
 
-        input#code
-        {
-            width: 50%;
-            margin-top: 15vh;
-            font-size: 30px;
-            padding: 10px;
-            text-align: center;
-            border-radius: 8px;
-            border: none;
+        .color-input:focus {
+            border-color: #000;
         }
 
-        .compare
-        {
+        .color-output {
+            margin: 16px auto;
+            padding: 16px 48px;
+            display: block;
+            position: relative;
+            border: 0;
+            border-radius: 36px;
+            font-size: 24px;
+            background: #<?php echo $hex ? $hex : 'ddd' ?>;
+            cursor: pointer;
+        }
+
+        .color-output-color {
+            opacity: 1;
+            transition: opacity .15s ease-in;
+        }
+
+        .copied .color-output-color {
+            opacity: 0;
+        }
+
+        .color-output-copied {
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: opacity .15s ease-in;
+        }
+
+        .copied .color-output-copied {
+            opacity: 1;
+        }
+
+        footer {
+            margin-top: 48px;
             display: inline-block;
-            margin-top: 40px;
-            width: 40%;
-            padding: 30px;
-            border-radius: 8px;
+            font-size: .75rem;
+            font-weight: 300;
         }
 
-        .item
-        {
-            float: left;
-            width: 10%;
-        }
-
-        .error
-        {
-            display: inline-block;
-            background-color: red;
-            padding: 6px 12px;
-            color: white;
-            font-weight: bold;
-            border-radius: 8px;
-            margin: 5px;
-        }
-
-        .thanks
-        {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-        }
-
-        .github
-        {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
+        footer a {
+            text-decoration: none;
         }
 
     </style>
-
-    <script type="text/javascript" src="ntc.js"></script>
 
 </head>
 <body>
@@ -160,25 +163,31 @@ if( $_GET['q'] )
 
 ?>
 
-    <form method="POST">
-        <input type="text" class="input" name="input" value="<?php echo ( $input_hex ) ? $input_hex : $hex ?>" placeholder="XXXXXX"/>
-        <input type="submit" class="submit" value="Go!" />
+    <h1>
+        Hex color -> sass variable
+    </h1>
+
+    <form method="POST" id="js-hexform">
+
+        <input class="color-input" type="text" class="input" name="input" value="<?php echo ( $input_hex ) ? $input_hex : $hex ?>" placeholder="Add a hex color" autofocus maxlength="7">
+
     </form>
 
 
     <?php echo $input; ?>
 
-    <br />
 
-    <?php
+<footer>Thanks <a href="http://chir.ag/projects/ntc">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades">Functioneel Wit</a>!</footer>
 
-    if(isset($find_by_js))
-    {
-?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="ntc.js"></script>
+<script src="clipboard.js-master/dist/clipboard.min.js"></script>
+
+<?php if(isset($find_by_js)) { ?>
 
     <span class="compare" id="compare"></span>
 
-    <script type="text/javascript">
+    <script>
 
         var n_match  = ntc.name("#<?php echo $hex; ?>");
         var name = n_match[1];
@@ -187,20 +196,41 @@ if( $_GET['q'] )
         name = name.replace(" ", "-");
         name = name.toLowerCase();
 
-        document.getElementById('code').value = '$color--' + name + ': #<?php echo minify_hex($hex) ?>;';
+        $('.color-output-color').html('$color--' + name + ': #<?php echo minify_hex($hex) ?>;');
+        $('#code').attr('data-clipboard-text', '$color--' + name + ': #<?php echo minify_hex($hex) ?>;');
 
     </script>
 
-<?php
+<?php } ?>
 
-    }
+<script>
+    
+    $(document).ready(function()
+    {
 
-?>
+        var clipboard = new Clipboard('#code');
+    
+        clipboard.on('success', function(e)
+        {
+            e.clearSelection();
+        });
+    
+        $('#code').on('click', function()
+        {
+            me = $(this);
+            me.addClass('copied');
+    
+            setTimeout(function()
+            {
+                me.removeClass('copied');
+            }, 1250);
+        })
+        
+        $('.color-input').select();
+        
+    });
 
-
-<small class="thanks">Thanks <a href="http://chir.ag/projects/ntc">Chirag Mehta</a>!</small>
-<small class="github"><a href="https://github.com/functioneelwit/fiftyshades">Project on Github</a></small>
-
+</script>
 
 </body>
 </html>
