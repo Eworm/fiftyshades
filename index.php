@@ -85,7 +85,7 @@ if( $_GET['q'] )
         }
 
         h1 {
-            margin: 0 0 40px;
+            margin: 0 0 24px;
             font-size: 24px;
             font-weight: 400;
         }
@@ -142,7 +142,8 @@ if( $_GET['q'] )
         }
         
         .exp {
-            display: block;
+            margin-top: 24px;
+            display: none;
             color: #aaa;
             font-weight: 300;
         }
