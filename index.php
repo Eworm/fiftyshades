@@ -233,8 +233,6 @@
                 var n_match  = ntc.name('#' + hex);
                 var name = n_match[1];
                 
-                console.log(hex);
-                console.log(luminosity);
                 if (luminosity[2] <= 0.5)
                 {
                     $('.color-output-container').addClass('dark');
@@ -275,7 +273,17 @@
 
         $('.color-input').on('click', function()
         {
-            $(this).select();
+            setTimeout(function()
+            {
+                if ($('.color-input').val())
+                {
+                    $('.color-input').select();
+                }
+                else
+                {
+                    $('.color-output-container').removeClass('found');
+                }
+            }, 10);
         })
 
         $('.color-input').select();
