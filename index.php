@@ -38,7 +38,7 @@
             display: inline-block;
             border: 1px solid #ccc;
             border-radius: 36px;
-            font-size: 2rem;
+            font-size: 1.5rem;
             background: white;
             transition: all .25s ease;
         }
@@ -66,7 +66,7 @@
             position: relative;
             border: 0;
             border-radius: 36px;
-            font-size: 24px;
+            font-size: 1.5rem;
             background: #<?php echo $hex ? $hex : 'ddd' ?>;
             cursor: pointer;
             font-size: 1.25rem;
@@ -96,7 +96,7 @@
         }
 
         .exp {
-            margin-top: 24px;
+            margin-top: 8px;
             display: block;
             color: #aaa;
             font-weight: 300;
