@@ -1,70 +1,12 @@
-<?php
-
-include('functions.php');
-
-if($_POST['input'])
-{
-    $input_hex = $_POST['input'];
-
-    if(validate_hex($input_hex))
-    {
-        header('location: ' . $input_hex);
-        exit;
-    }
-    else
-    {
-        $error = '#' . $input_hex . ' is no valid hex color value.. better yourself!';
-    }
-
-}
-
-
-if( $_GET['q'] )
-{
-    $hex = strtoupper($_GET['q']);
-
-    if(strlen($hex) === 3)
-    {
-        $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
-    }
-
-    $rgb = hex2rgb($hex);
-
-    if( $rgb['r'] === $rgb['g'] && $rgb['g'] === $rgb['b'] )
-    {
-
-        $code = 100 - round((($rgb['r'] / 255) * 100));
-
-        if( $code < 10 )
-        {
-            $code = '0' . $code;
-        }
-
-        $class = '$color--gray-' . $code. ': #' . minify_hex($hex) . ';';
-
-    }
-    else
-    {
-
-        $find_by_js = true;
-
-    }
-
-    $input = '<button class="color-output" type="button" id="code" data-clipboard-text="' . @$class . '"><span class="color-output-color">' . @$class . '</span><span class="color-output-copied">Copied!</span></button>';
-
-}
-
-?>
-
 <html lang="en">
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="language" content="en">
     <title>
         Hex color -> sass variable
     </title>
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
@@ -104,6 +46,18 @@ if( $_GET['q'] )
         .color-input:focus {
             border-color: #000;
         }
+        
+        .color-output-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all .15s ease-in;
+        }
+        
+        .found {
+            max-height: none;
+            opacity: 1;
+        }
 
         .color-output {
             margin: 16px auto;
@@ -140,10 +94,10 @@ if( $_GET['q'] )
         .copied .color-output-copied {
             opacity: 1;
         }
-        
+
         .exp {
             margin-top: 24px;
-            display: none;
+            display: block;
             color: #aaa;
             font-weight: 300;
         }
@@ -158,107 +112,141 @@ if( $_GET['q'] )
         footer a {
             text-decoration: none;
         }
-        
+
         .error {
             margin-bottom: 40px;
-            display: block;
+            display: none;
             color: red;
         }
 
     </style>
 
 </head>
+
 <body>
 
-<?php
+<h1>
+    Hex color -> sass variable
+</h1>
 
-    if(isset($error))
-    {
+<form method="POST" id="js-hexform">
 
-?>
+    <input class="color-input" type="search" class="input" name="input" placeholder="Add a hex color" autofocus maxlength="7" autocomplete="off">
 
-    <span class="error"><?php echo $error ?></span>
+    <span class="error"></span>
 
-<?php
+</form>
 
-    }
+<div class="color-output-container">
 
-?>
-
-    <h1>
-        Hex color -> sass variable
-    </h1>
-
-    <form method="POST" id="js-hexform">
-
-        <input class="color-input" type="text" class="input" name="input" value="<?php echo ( $input_hex ) ? $input_hex : $hex ?>" placeholder="Add a hex color" autofocus maxlength="7">
-
-    </form>
-
-    <?php echo $input; ?>
+    <button class="color-output" type="button" id="code" data-clipboard-text="">
+        <span class="color-output-color"></span>
+        <span class="color-output-copied">Copied!</span>
+    </button>
     
     <small class="exp">
         Click variable to copy to clipboard
     </small>
 
-    <footer>
-        Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>
-    </footer>
+</div>
+
+<footer>
+    Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>
+</footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="ntc.js"></script>
 <script src="clipboard.js-master/dist/clipboard.min.js"></script>
 
-<?php if(isset($find_by_js)) { ?>
-
-    <span class="compare" id="compare"></span>
-
-    <script>
-
-        var n_match  = ntc.name("#<?php echo $hex; ?>");
-        var name = n_match[1];
-
-        name = name.replace(" / ", "-");
-        name = name.replace(" ", "-");
-        name = name.toLowerCase();
-
-        $('.color-output-color').html('$color--' + name + ': #<?php echo minify_hex($hex) ?>;');
-        $('#code').attr('data-clipboard-text', '$color--' + name + ': #<?php echo minify_hex($hex) ?>;');
-
-    </script>
-
-<?php } ?>
+<span class="compare" id="compare"></span>
 
 <script>
-    
+
     $(document).ready(function()
     {
 
+        $('#js-hexform').on('submit', function(e)
+        {
+            e.preventDefault();
+            console.log(hexToRgb($('.color-input').val()));
+            $('.color-input').focus();
+        })
+
+        function hexToRgb(hex)
+        {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
+
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            console.log('hex: ' + hex);
+            console.log('result: ' + result);
+            var resultColor = [];
+            resultColor.push (
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16)
+            );
+            console.log('resultColor: ' + resultColor);
+            console.log(!!resultColor.reduce(function(a, b){ return (a === b) ? a : NaN; }));
+
+            if (!!resultColor.reduce(function(a, b){ return (a === b) ? a : NaN; }) === true)
+            {
+
+                console.log('A grey');
+                
+                var greyPercentage = Math.floor(100- (100/255) * resultColor[0]);
+                $('.color-output-container').addClass('found');
+                $('.color-output-color').html('$color--' + greyPercentage + ': #' + hex + ';');
+                $('#code').attr('data-clipboard-text', '$color--' + greyPercentage + ': #' + hex + ';').css('background', '#' + hex);
+
+            }
+            else
+            {
+
+                console.log('A color');
+
+                var n_match  = ntc.name('#' + hex);
+                var name = n_match[1];
+
+                name = name.replace(" / ", "-");
+                name = name.replace(" ", "-");
+                name = name.toLowerCase();
+
+                $('.color-output-container').addClass('found');
+                $('.color-output-color').html('$color--' + name + ': #' + hex + ';');
+                $('#code').attr('data-clipboard-text', '$color--' + name + ': #' + hex + ';').css('background', '#' + hex);
+
+            }
+        }
+
         var clipboard = new Clipboard('#code');
-    
+
         clipboard.on('success', function(e)
         {
             e.clearSelection();
         });
-    
+
         $('#code').on('click', function()
         {
             me = $(this);
             me.addClass('copied');
-    
+
             setTimeout(function()
             {
                 me.removeClass('copied');
             }, 1250);
         })
-        
+
         $('.color-input').on('click', function()
         {
-            $(this).select();    
+            $(this).select();
         })
-        
+
         $('.color-input').select();
-        
+
     });
 
 </script>
