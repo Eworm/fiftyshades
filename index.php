@@ -48,7 +48,7 @@
         }
 
         .color-input:focus {
-            border-color: #f6d282;
+            border-color: #222;
         }
 
         .color-output-container {
