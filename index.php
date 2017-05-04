@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
 
     <style>
 
@@ -243,7 +243,7 @@
                 }
 
                 name = name.replace(" / ", "-");
-                name = name.replace(" ", "-");
+                name = name.replace(/ /g, '-');
                 name = name.toLowerCase();
 
                 $('.color-output-container').addClass('found');
