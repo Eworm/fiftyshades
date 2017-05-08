@@ -195,13 +195,11 @@
 
     <span class="error"></span>
 
-</form>
+    <footer>
+        Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>. More info about colors in design systems is <a href="https://medium.com/eightshapes-llc/color-in-design-systems-a1c80f65fa3#.w5cudfcy9">here</a>. An example of how to use these variables in sass is <a href="https://github.com/Eworm/template/blob/master/sass/theme/_colors.scss">here</a>.
+    </footer>
 
-<footer>
-    Thanks <a href="http://chir.ag/projects/ntc" rel="external">Chirag Mehta</a> & <a href="https://github.com/functioneelwit/fiftyshades" rel="external">Functioneel Wit</a>
-    <br>
-    More info about colors in design systems is <a href="https://medium.com/eightshapes-llc/color-in-design-systems-a1c80f65fa3#.w5cudfcy9">here</a>
-</footer>
+</form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="ntc.js"></script>
