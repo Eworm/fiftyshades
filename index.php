@@ -9,14 +9,33 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
+    <!-- Modern favicons: http://thenewcode.com/28/Making-And-Deploying-SVG-Favicons -->
+    <!-- Use http://realfavicongenerator.net/ for all other root icons -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <style>
+
+        @font-face {
+            font-family: 'freightsans_medium';
+            src: url('fonts/freight_sans_medium-webfont.woff2') format('woff2'),
+                 url('fonts/freight_sans_medium-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'norwesterregular';
+            src: url('fonts/norwester-webfont.woff2') format('woff2'),
+                 url('fonts/norwester-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         *  {
             margin: 0;
             padding: 0;
-            font-family: 'Fira Sans';
+            font-family: 'freightsans_medium', sans-serif;
             text-align: center;
             line-height: 1.8;
             outline: 0;
@@ -32,8 +51,11 @@
 
         h1 {
             margin: 0 0 24px;
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 400;
+            font-family: norwesterregular;
+            text-transform: uppercase;
+            color: #9d4165;
         }
 
         .color-input {
@@ -114,8 +136,8 @@
         footer {
             margin-top: 48px;
             display: inline-block;
-            font-size: .75rem;
             font-weight: 300;
+            color: #aaa;
         }
 
         footer a {
@@ -139,7 +161,7 @@
 <body>
 
 <h1>
-    Hex color -> sass variable
+    Hex color to sass variable
 </h1>
 
 <form method="POST" id="js-hexform">
@@ -232,7 +254,7 @@
 
                 var n_match  = ntc.name('#' + hex);
                 var name = n_match[1];
-                
+
                 if (luminosity[2] <= 0.5)
                 {
                     $('.color-output-container').addClass('dark');
