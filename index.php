@@ -58,8 +58,14 @@
             color: #9d4165;
         }
 
-        .color-input {
+        form {
+            width: 90%;
+            max-width: 500px;
             margin: 0 auto;
+        }
+
+        .color-input {
+            width: 100%;
             padding: 8px 16px;
             display: inline-block;
             border: 1px solid #ccc;
@@ -85,11 +91,16 @@
             opacity: 1;
         }
 
+        .found .color-output {
+            transform: rotateX(0);
+        }
+
         .dark .color-output {
             color: white;
         }
 
         .color-output {
+            width: 100%;
             margin: 16px auto;
             padding: 16px 48px;
             display: block;
@@ -101,6 +112,7 @@
             cursor: pointer;
             font-size: 1.25rem;
             transition: all .25s ease;
+            transform: rotateX(90deg);
         }
 
         .color-output-color {
@@ -160,13 +172,13 @@
 
 <body>
 
-<h1>
-    Hex color to sass variable
-</h1>
-
 <form method="POST" id="js-hexform">
 
-    <input class="color-input" type="search" class="input" name="input" placeholder="Add a hex color" autofocus maxlength="7" autocomplete="off">
+    <h1>
+        Hex color to sass variable
+    </h1>
+
+    <input class="color-input" type="search" class="input" name="input" placeholder="Add a hex" autofocus maxlength="7" autocomplete="off">
 
     <div class="color-output-container">
 
