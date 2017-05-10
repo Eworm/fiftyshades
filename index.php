@@ -270,7 +270,8 @@
 
                 console.log('A color');
 
-                var n_match  = ntc.name('#' + hex);
+                var n_match  = ntc.name(hex);
+                console.log(hex);
                 var name = n_match[1];
 
                 if (luminosity[2] <= 0.5)
@@ -282,6 +283,7 @@
                     $('.color-output-container').removeClass('dark');
                 }
 
+                hex = hex.replace(/#/g, '');
                 name = name.replace(" / ", "-");
                 name = name.replace(/ /g, '-');
                 name = name.toLowerCase();
