@@ -261,8 +261,8 @@
 
                 var greyPercentage = Math.floor(100- (100/255) * resultColor[0]);
                 $('.color-output-container').addClass('found');
-                $('.color-output-color').html('$color--' + greyPercentage + ': #' + hex + ';');
-                $('#code').attr('data-clipboard-text', '$color--' + greyPercentage + ': #' + hex + ';').css('background', '#' + hex);
+                $('.color-output-color').html('$color--gray-' + greyPercentage + ': #' + hex + ';');
+                $('#code').attr('data-clipboard-text', '$color--gray-' + greyPercentage + ': #' + hex + ';').css('background', '#' + hex);
 
             }
             else
