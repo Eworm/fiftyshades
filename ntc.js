@@ -493,6 +493,7 @@ var ntc = {
 ["4EABD1", "Shakespeare"],
 ["4F1C70", "Honey Flower"],
 ["4F2398", "Daisy Bush"],
+["4f3e62", "Love Symbol 2"],
 ["4F69C6", "Indigo"],
 ["4F7942", "Fern Green"],
 ["4F9D5D", "Fruit Salad"],
