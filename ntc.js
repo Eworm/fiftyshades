@@ -1573,6 +1573,7 @@ var ntc = {
 ["FF7F00", "Flush Orange"],
 ["FF7F50", "Coral"],
 ["FF8C69", "Salmon"],
+["FFF8E7", "Cosmic Latte"],
 ["FF9000", "Pizazz"],
 ["FF910F", "West Side"],
 ["FF91A4", "Pink Salmon"],
